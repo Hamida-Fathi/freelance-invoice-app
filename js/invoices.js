@@ -1,9 +1,6 @@
-// Load data from localStorage
-
 let clients = JSON.parse(localStorage.getItem("clients")) || [];
 let invoices = JSON.parse(localStorage.getItem("invoices")) || [];
 
-// Select form and elements
 const invoiceForm = document.getElementById("invoiceForm");
 const clientSelect = document.getElementById("clientSelect");
 const serviceTitle = document.getElementById("serviceTitle");
@@ -13,7 +10,6 @@ const date = document.getElementById("date");
 const invoiceList = document.getElementById("invoiceList");
 const totalAmount = document.getElementById("totalAmount");
 
-// ✅ Populate the client dropdown
 function populateClientDropdown() {
   clientSelect.innerHTML = '<option value="">Select Client</option>';
   clients.forEach((client) => {
@@ -24,19 +20,16 @@ function populateClientDropdown() {
   });
 }
 
-// ✅ Save invoices to localStorage
 function saveInvoices() {
   localStorage.setItem("invoices", JSON.stringify(invoices));
 }
 
-// ✅ Delete invoice
 function deleteInvoice(id) {
   invoices = invoices.filter((inv) => inv.id !== id);
   saveInvoices();
   renderInvoices();
 }
 
-// ✅ Mark as Paid / Unpaid
 function togglePaid(id) {
   invoices = invoices.map((inv) =>
     inv.id === id ? { ...inv, paid: !inv.paid } : inv
@@ -45,7 +38,6 @@ function togglePaid(id) {
   renderInvoices();
 }
 
-// ✅ Render invoices in the table
 function renderInvoices() {
   invoiceList.innerHTML = "";
 
@@ -99,7 +91,7 @@ invoiceForm.addEventListener("submit", (e) => {
   }
 
   const newInvoice = {
-    id: Date.now().toString(), // keep as string
+    id: Date.now().toString(),
     clientId: clientSelect.value,
     serviceTitle: serviceTitle.value.trim(),
     description: description.value.trim(),

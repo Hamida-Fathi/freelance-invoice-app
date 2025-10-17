@@ -5,6 +5,8 @@ const totalClientsEl = document.getElementById("totalClients");
 const totalInvoicesEl = document.getElementById("totalInvoices");
 const totalValueEl = document.getElementById("totalValue");
 const paidUnpaidEl = document.getElementById("paidUnpaid");
+const quoteTextEl = document.getElementById("quoteText");
+const quoteAuthorEl = document.getElementById("quoteAuthor");
 
 function updateDashboardStats() {
   const totalClients = clients.length;
@@ -22,33 +24,26 @@ function updateDashboardStats() {
   paidUnpaidEl.textContent = `${paidInvoices} / ${unpaidInvoices}`;
 }
 
-const quoteText = document.getElementById("quote-text");
-const quoteAuthor = document.getElementById("quote-author");
-
 async function loadRandomQuote() {
   try {
-    const res = await fetch("./quotes.json"); // adjust path here
-    if (!res.ok) throw new Error("Failed to load quotes file");
+    const res = await fetch("./quotes.json");
+    if (!res.ok) throw new Error("Failed to load quotes");
 
     const quotes = await res.json();
-    if (!Array.isArray(quotes) || quotes.length === 0)
-      throw new Error("Quotes data is empty or invalid");
+    if (!quotes || quotes.length === 0) return;
 
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[randomIndex];
 
-    quoteText.textContent = quote.text || "No quote available";
-    quoteAuthor.textContent = quote.author || "Unknown";
+    quoteTextEl.textContent = quote.text;
+    quoteAuthorEl.textContent = quote.author;
+    quoteTextEl.classList.add("visible");
   } catch (err) {
-    console.error("Error loading quotes:", err);
-    quoteText.textContent = "Failed to load quote.";
-    quoteAuthor.textContent = "";
+    console.error("Failed to load quotes:", err);
+    quoteTextEl.textContent = "Failed to load quote";
+    quoteAuthorEl.textContent = "";
   }
 }
-
-loadRandomQuote();
-
-loadRandomQuote();
 
 updateDashboardStats();
 loadRandomQuote();

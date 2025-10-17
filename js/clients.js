@@ -7,7 +7,6 @@ const company = document.getElementById("company");
 const clientList = document.getElementById("clientList");
 let editId = null;
 
-// Show clients
 function showClient() {
   clientList.innerHTML = "";
   clients.forEach((c, index) => {
