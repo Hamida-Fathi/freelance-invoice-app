@@ -26,7 +26,7 @@ function updateDashboardStats() {
 
 async function loadRandomQuote() {
   try {
-    const res = await fetch("./quotes.json");
+    const res = await fetch("js/quotes.json");
     if (!res.ok) throw new Error("Failed to load quotes");
 
     const quotes = await res.json();
